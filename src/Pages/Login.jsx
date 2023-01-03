@@ -22,10 +22,13 @@ const Login = () => {
       toast.error("Password should be at least 6 characters");
       return false;
     }
-    fetch("http://localhost:4000/user")
+    fetch("http://localhost:4000/user/users")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+
         const userFind = data.find((datae) => datae.email === email);
+        console.log(userFind);
 
         if (userFind) {
           if (userFind.password === password) {
@@ -33,6 +36,7 @@ const Login = () => {
               .then((result) => {
                 console.log(result);
                 toast.success(`Welcome ${userFind.username}`);
+                // localStorage.setItem("accessToken", userFind.token);
                 navigate("/");
               })
               .catch((err) => {

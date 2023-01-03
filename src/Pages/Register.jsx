@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
@@ -42,8 +42,17 @@ const Register = () => {
           if (data._id) {
             createUser(email, password)
               .then((result) => {
-                toast.success(`Welcome ${username}`);
-                navigate(`/`);
+                const userInfo = {
+                  photoURL: user.avatar,
+                  displayName: user.username,
+                };
+
+                updateUser(userInfo).then((result) => {
+                  console.log(result);
+                  toast.success(`Welcome ${username}`);
+                  localStorage.setItem("accessToken", data.token);
+                  navigate("/");
+                });
               })
               .catch((err) => {
                 console.error(err);
