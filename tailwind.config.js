@@ -15,7 +15,11 @@ module.exports = {
     ],
   },
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        "25/75": "25% 75%",
+      },
+    },
   },
   plugins: [require("daisyui")],
 };

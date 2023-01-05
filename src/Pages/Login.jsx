@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import { CiFlag1 } from "react-icons/ci";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 
@@ -35,8 +36,10 @@ const Login = () => {
             login(userFind.email, password)
               .then((result) => {
                 console.log(result);
+                console.log(userFind)
+                localStorage.setItem('user', JSON.stringify(userFind) )
                 toast.success(`Welcome ${userFind.username}`);
-                // localStorage.setItem("accessToken", userFind.token);
+                localStorage.setItem("accessToken", userFind.token);
                 navigate("/");
               })
               .catch((err) => {

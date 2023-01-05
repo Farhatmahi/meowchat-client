@@ -1,8 +1,8 @@
 import React from "react";
 
-const UserListItem = ({userData}) => {
+const UserListItem = ({userData, handleFunction}) => {
   return (
-    <div className="bg-neutral rounded-2xl my-2 pl-4 py-2 flex cursor-pointer ">
+    <div onClick={handleFunction} className="bg-neutral hover:bg-black ease-in-out transition duration-300 rounded-2xl my-2 pl-4 py-2 flex cursor-pointer ">
       <div className="avatar">
         <div className="w-16 rounded-full">
           <img src={userData.image} alt='user_img' />

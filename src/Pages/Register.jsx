@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Children, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
@@ -16,6 +16,8 @@ const Register = () => {
   const [isOff, setisOff] = useState(false);
   const [dataImage, setdataImage] = useState([]);
 
+  console.log(image);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (handleValidation()) {
@@ -24,7 +26,7 @@ const Register = () => {
         username: username,
         email: email,
         password: password,
-        avatar: image,
+        image: image,
       };
 
       console.log(user);

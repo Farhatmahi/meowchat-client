@@ -12,7 +12,8 @@ import UserListItem from "./UserListItem";
 
 const SideDrawer = () => {
   const { user, logout } = useContext(AuthContext);
-  const {selectedChat, setSelectedChat, chats, setChats} = useContext(ChatContext)
+  const { selectedChat, setSelectedChat, chats, setChats } =
+    useContext(ChatContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -66,36 +67,46 @@ const SideDrawer = () => {
     }
   };
 
-  const accessChat = async(id) => {
-   try {
-    setLoadingChat(true)
+  const accessChat = async (userId) => {
+    try {
+      setLoadingChat(true);
 
-    const {data} = await axios.post(`http://localhost:4000/chat`, {
-      method : "POST",
-      headers : {
-        'content-type' : 'application/json'
+      const token = localStorage.getItem("accessToken");
+
+      const { data } = await axios.post(`http://localhost:4000/chat`, { userId }, {
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${token}`,
+        }
+      });
+
+      console.log(data);
+      console.log(chats)
+      if (!chats.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+        
       }
-    })
-    setSelectedChat(data)
-    setLoadingChat(false)
+      
+      setSelectedChat(data);
+      setLoadingChat(false);
 
-   } catch (error) {
-    toast.error("Error fetching the chats", {
-      style: {
-        padding: "16px",
-        backgroundColor: "#5853d5",
-        color: "#FFFFFF",
-      },
-    });
-   } 
-  }
+    } catch (error) {
+      toast.error("Error fetching the chats", {
+        style: {
+          padding: "16px",
+          backgroundColor: "#5853d5",
+          color: "#FFFFFF",
+        },
+      });
+    }
+  };
 
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* <!-- Navbar --> */}
-        <div className="w-full navbar">
+        <div className="w-full navbar border-b-2 border-base-100">
           <div className="flex-none">
             <label
               htmlFor="my-drawer-3"
@@ -176,9 +187,14 @@ const SideDrawer = () => {
             </div>
           ) : (
             searchResult.map((userData) => (
-              <UserListItem key={userData._id} userData={userData} handleFunction={() => accessChat(userData._id)} />
+              <UserListItem
+                key={userData._id}
+                userData={userData}
+                handleFunction={() => accessChat(userData._id)}
+              />
             ))
           )}
+          {loadingChat && <Loader />}
         </ul>
       </div>
     </div>
@@ -186,11 +202,3 @@ const SideDrawer = () => {
 };
 
 export default SideDrawer;
-
-<div className="flex justify-between items-center border-b-2 border-base-100 py-2">
-  <label
-    className="btn bg-[#16171b] rounded-2xl md:px-8 "
-    id="my-drawer"
-  ></label>
-  <h1>ChatBud</h1>
-</div>;

@@ -10,7 +10,7 @@ const Chat = () => {
     // const {user, setUser} = useContext(ChatContext)
     const {user} = useContext(AuthContext)
     return (
-        <div>
+        <div className='h-screen overflow-hidden'>
             {user && <SideDrawer></SideDrawer>}
         </div>
     );

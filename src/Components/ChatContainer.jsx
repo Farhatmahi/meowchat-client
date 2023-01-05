@@ -5,8 +5,12 @@ import MyChats from './MyChats';
 
 const ChatContainer = () => {
     const {user} = useContext(AuthContext)
+
+    
+    
     return (
-        <div className="flex justify-between w-full p-10">
+        
+        <div className="flex w-full">
                 {user && <MyChats></MyChats>}
                 {user && <Chatbox></Chatbox>}
             </div>
