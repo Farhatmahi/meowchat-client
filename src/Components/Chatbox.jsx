@@ -2,7 +2,7 @@ import React from 'react';
 
 const Chatbox = () => {
     return (
-        <div className='bg-[#1D1E24] ml-8 rounded-b-3xl rounded-l-3xl'>
+        <div className='bg-[#1D1E24] mx-8 flex-grow mt-8 py-2 rounded-t-3xl'>
             chat
         </div>
     );

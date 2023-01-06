@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import { AiOutlineBell } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
@@ -106,7 +107,7 @@ const SideDrawer = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* <!-- Navbar --> */}
-        <div className="w-full navbar border-b-2 border-base-100">
+        <div className="w-full navbar border-b-2 border-base-100 h-[10vh]">
           <div className="flex-none">
             <label
               htmlFor="my-drawer-3"
@@ -122,7 +123,7 @@ const SideDrawer = () => {
             <div className="flex items-center">
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn m-1">
-                  Click
+                  <AiOutlineBell className="text-2xl" />
                 </label>
                 <ul
                   tabIndex={0}
