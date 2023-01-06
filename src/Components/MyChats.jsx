@@ -6,12 +6,12 @@ import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { getSender } from "../Config/ChatLogics";
 import GroupChatModal from "./Misc/GroupChatModal";
 
-
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setloggedUser] = useState();
   const { selectedChat, setSelectedChat, chats, setChats } =
     useContext(ChatContext);
-  
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   // console.log(selectedChat);
 
@@ -25,18 +25,18 @@ const MyChats = () => {
       setChats(data);
     };
 
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem("user"));
     setloggedUser(user);
     fetchChats();
-    
-  }, [setChats]);
-
+  }, [setChats, fetchAgain]);
 
   // console.log(selectedChat)
 
   // console.log(chats);
   // console.log(loggedUser)
 
+  // console.log(modalOpen);
+  console.log(chats);
 
   return (
     <div
@@ -46,20 +46,44 @@ const MyChats = () => {
     >
       <div className="flex justify-between items-center mb-8">
         <h1 className="ml-2 font-semibold text-xl">My Chats</h1>
-        <label htmlFor="my-modal-3"  className="btn btn-accent">
+        <label
+          onClick={() => setModalOpen(true)}
+          htmlFor="my-modal-3"
+          className="btn btn-accent"
+        >
           New Group
           <AiOutlineUsergroupAdd className="inline ml-2" />
         </label>
       </div>
       <div className="flex flex-col space-y-2">
-        {chats.map((chat) => (
-          <div className={`${selectedChat===chat ? "bg-accent text-black" : "bg-base-100"} p-4 rounded-2xl transition duration-300`} key={chat._id} onClick={() => setSelectedChat(chat)}>
-            
-            {!chat.isGroupChat ? getSender(loggedUser, chat.users) : (chat.chatName)}
-          </div>
-        ))}
+        {chats ? (
+          chats.map((chat) => (
+            <div
+              className={`${
+                selectedChat === chat ? "bg-accent text-black" : "bg-base-100"
+              } p-4 rounded-2xl transition duration-300`}
+              key={chat._id}
+              onClick={() => setSelectedChat(chat)}
+            >
+              <img
+                src={
+                  !chat.isGroupChat
+                    ? chat.users[1].image
+                    : "https://i.ibb.co/C1NKnQ8/20-group-avatar-icons-2-modified.png"
+                }
+                className="w-10 rounded-3xl inline mr-4"
+                alt=""
+              />
+              <h1 className="inline text-sm md:text-lg">{!chat.isGroupChat
+                ? getSender(loggedUser, chat.users)
+                : chat.chatName}</h1>
+            </div>
+          ))
+        ) : (
+          <p>No chats here</p>
+        )}
       </div>
-      <GroupChatModal />
+      {modalOpen && <GroupChatModal setModalOpen={setModalOpen} />}
     </div>
   );
 };

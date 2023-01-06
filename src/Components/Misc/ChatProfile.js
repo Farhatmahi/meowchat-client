@@ -1,26 +1,25 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
+import React from "react";
 
-const ProfileModal = ({ user }) => {
-  console.log(user);
+const ChatProfile = ({ chatUser }) => {
+  console.log(chatUser)
   return (
     <div className="">
-      <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <input type="checkbox" id="my-modal-7" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box relative flex flex-col items-center justify-center ">
           <label
-            htmlFor="my-modal-6"
+            htmlFor="my-modal-7"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
           </label>
           <div className="avatar mb-8">
             <div className="w-24 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
-              <img src={user.photoURL} alt="user_photo" />
+              <img src={chatUser?.users[1]?.image} alt="user_photo" />
             </div>
           </div>
-          <h1 className="font-bold">{user.displayName}</h1>
-          <h2 className="text-gray-500">{user.email}</h2>
+          <h1 className="font-bold">{chatUser?.users[1]?.username}</h1>
+          <h2 className="text-gray-500">{chatUser?.users[1]?.email}</h2>
           <div className="modal-action"></div>
         </div>
       </div>
@@ -28,4 +27,4 @@ const ProfileModal = ({ user }) => {
   );
 };
 
-export default ProfileModal;
+export default ChatProfile;

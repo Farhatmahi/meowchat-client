@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import UserListItem from "./UserListItem";
 import UserNameBadge from "./UserNameBadge";
 
-const GroupChatModal = () => {
+const GroupChatModal = ({setModalOpen}) => {
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -16,7 +16,7 @@ const GroupChatModal = () => {
   const { user, chats, setChats } = useContext(ChatContext);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!groupChatName || !selectedUsers) {
       toast.error("Please fill all of the fields", {
         style: {
@@ -30,29 +30,37 @@ const GroupChatModal = () => {
     try {
       const { data } = await axios.post(
         `http://localhost:4000/chat/group`,
-        
+
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),
-        },{
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
 
-        setChats([data, ...chats])
+      setChats([data, ...chats]);
 
-        toast.success("Group chat created", {
-            style: {
-              padding: "16px",
-              backgroundColor: "#5853d5",
-              color: "#FFFFFF",
-            },
-          });
-
-
-    } catch (error) {}
+      toast.success("Group chat created", {
+        style: {
+          padding: "16px",
+          backgroundColor: "#5853d5",
+          color: "#FFFFFF",
+        },
+      });
+      setModalOpen(false)
+    } catch (error) {
+        // toast.error("Please atleast choose 2 users", {
+        //     style: {
+        //       padding: "16px",
+        //       backgroundColor: "#5853d5",
+        //       color: "#FFFFFF",
+        //     },
+        //   }); 
+    }
   };
 
   const handleSearch = async (query) => {
@@ -73,7 +81,7 @@ const GroupChatModal = () => {
         }
       );
 
-    //   console.log(data);
+      //   console.log(data);
       setLoading(false);
       setSearchResults(data);
     } catch (error) {
@@ -87,7 +95,7 @@ const GroupChatModal = () => {
     }
   };
 
-//   console.log(selectedUsers);
+  //   console.log(selectedUsers);
   const handleGroup = (user) => {
     if (selectedUsers.includes(user)) {
       toast.error("User already added", {
@@ -122,27 +130,27 @@ const GroupChatModal = () => {
           </label>
           <h3 className="text-lg font-bold">Create group chat</h3>
           <form onSubmit={handleSubmit} className="space-y-2">
-            <div className="form-control w-full max-w-xs">
+            <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">What is your name?</span>
               </label>
               <input
                 type="text"
                 placeholder="Group name"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full"
                 onChange={(e) => {
                   setGroupChatName(e.target.value);
                 }}
               />
             </div>
-            <div className="form-control w-full max-w-xs">
+            <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">What is your name?</span>
               </label>
               <input
                 type="text"
                 placeholder="Search for users"
-                className="input input-bordered w-full max-w-xs mb-4"
+                className="input input-bordered w-full mb-4"
                 onChange={(e) => {
                   handleSearch(e.target.value);
                 }}
@@ -178,7 +186,7 @@ const GroupChatModal = () => {
             )}
 
             <input
-              type="Create"
+              type="submit" value="Create"
               className="btn bg-accent hover:bg-[#E9F83F] rounded-2xl text-black"
             />
           </form>
