@@ -132,11 +132,11 @@ const GroupChatModal = ({setModalOpen}) => {
           <form onSubmit={handleSubmit} className="space-y-2">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">What is your name?</span>
+                <span className="label-text">Group name</span>
               </label>
               <input
                 type="text"
-                placeholder="Group name"
+                placeholder="Type here"
                 className="input input-bordered w-full"
                 onChange={(e) => {
                   setGroupChatName(e.target.value);
@@ -145,11 +145,11 @@ const GroupChatModal = ({setModalOpen}) => {
             </div>
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">What is your name?</span>
+                <span className="label-text">Search user to add</span>
               </label>
               <input
                 type="text"
-                placeholder="Search for users"
+                placeholder="Type"
                 className="input input-bordered w-full mb-4"
                 onChange={(e) => {
                   handleSearch(e.target.value);

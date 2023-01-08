@@ -119,7 +119,7 @@ const SideDrawer = () => {
             </label>
           </div>
           <div className="flex-1 px-2 mx-2">ChatBud</div>
-          <div className="flex-none hidden lg:block">
+          <div className="flex-none ">
             <div className="flex items-center">
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn m-1">
@@ -195,7 +195,9 @@ const SideDrawer = () => {
               />
             ))
           )}
-          {loadingChat && <Loader />}
+          {loadingChat && <div className="flex justify-center items-center py-4">
+              <Loader />{" "}
+            </div>}
         </ul>
       </div>
     </div>

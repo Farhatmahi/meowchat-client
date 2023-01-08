@@ -1,7 +1,7 @@
 import React from "react";
 
 const ChatProfile = ({ chatUser }) => {
-  console.log(chatUser)
+  // console.log(chatUser)
   return (
     <div className="">
       <input type="checkbox" id="my-modal-7" className="modal-toggle" />

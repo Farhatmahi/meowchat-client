@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../Context/AuthProvider";
 
 const ProfileModal = ({ user }) => {
-  console.log(user);
+  // console.log(user);
   return (
     <div className="">
       <input type="checkbox" id="my-modal-6" className="modal-toggle" />
