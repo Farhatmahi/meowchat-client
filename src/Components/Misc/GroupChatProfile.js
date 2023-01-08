@@ -20,6 +20,8 @@ const GroupChatProfile = ({
   const [renameLoading, setRenameLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
+  console.log(selectedChat);
+
   const handleRemove = (user) => {};
 
   const handleRename = async (e) => {
@@ -101,10 +103,10 @@ const GroupChatProfile = ({
     }
   };
 
-  console.log(selectedChat);
-//   console.log(user)
-  const handleGroup = async (user1,e) => {
-    e.preventDefault()
+  //   console.log(selectedChat);
+  //   console.log(user)
+  const handleGroup = async (user1, e) => {
+    e.preventDefault();
     if (selectedChat.users.find((usr) => usr._id === user1._id)) {
       toast.error("User already added", {
         style: {
@@ -115,8 +117,6 @@ const GroupChatProfile = ({
       });
       return;
     }
-
-    
 
     if (selectedChat?.groupAdmin?._id !== user._id) {
       toast.error("Only admin can add", {
@@ -141,27 +141,35 @@ const GroupChatProfile = ({
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            'Content-Type': 'application/json'
           },
         }
       );
 
-
-      console.log(data)
+      console.log(data);
+    // } catch (err) {}
 
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setLoading(false);
+      toast.success(`${user1.username} is added on the group`, {
+        style: {
+          padding: "16px",
+          backgroundColor: "#5853d5",
+          color: "#FFFFFF",
+        },
+      });
     } catch (err) {
-        toast.error("An error occured", {
-            style: {
-              padding: "16px",
-              backgroundColor: "#5853d5",
-              color: "#FFFFFF",
-            },
-          });
+      toast.error("An error occured", {
+        style: {
+          padding: "16px",
+          backgroundColor: "#5853d5",
+          color: "#FFFFFF",
+        },
+      });
     }
 
-    // setSelectedUsers([...selectedUsers, user]);
+    setSelectedUsers([...selectedUsers, user1]);
   };
 
   const handleLeave = (user) => {
@@ -199,39 +207,44 @@ const GroupChatProfile = ({
               />
             ))}
           </div>
-          <form onSubmit={handleRename} className="flex flex-col items-end">
-            <div className="flex items-end">
-              <div className="form-control w-full">
-                <label className="label">
-                  <span className="label-text">Rename group?</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Group name"
-                  className="input input-bordered w-full"
-                  onChange={(e) => {
-                    setGroupChatName(e.target.value);
-                  }}
-                />
-              </div>
-              <button type="submit" className="btn btn-accent ml-2">
-                Rename
-              </button>
-            </div>
+
+          <div className="flex items-end">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Add users</span>
+                <span className="label-text">Rename group?</span>
               </label>
               <input
                 type="text"
-                placeholder="Type here"
-                className="input input-bordered w-80"
+                placeholder="Group name"
+                className="input input-bordered w-full"
                 onChange={(e) => {
-                  handleSearch(e.target.value);
+                  setGroupChatName(e.target.value);
                 }}
               />
             </div>
-          </form>
+            <button
+              onClick={handleRename}
+              type="submit"
+              className="btn btn-accent ml-2"
+            >
+              Rename
+            </button>
+          </div>
+          <div className="">
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Add users</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered w-80"
+              onChange={(e) => {
+                handleSearch(e.target.value);
+              }}
+            />
+          </div>
+          </div>
 
           <div className="flex flex-col w-80">
             {loading ? (
@@ -250,11 +263,15 @@ const GroupChatProfile = ({
                 ))
             )}
           </div>
-          <form onSubmit={handleLeave}>
-            <button type="submit" className="btn btn-error mt-4 w-80">
-              Leave Group
-            </button>
-          </form>
+
+          <button
+            onClick={handleLeave}
+            type="submit"
+            className="btn btn-error mt-4 w-80"
+          >
+            Leave Group
+          </button>
+
           <div className="modal-action"></div>
         </div>
       </div>
