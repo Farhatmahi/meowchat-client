@@ -53,6 +53,7 @@ const Register = () => {
                   console.log(result);
                   toast.success(`Welcome ${username}`);
                   localStorage.setItem("accessToken", data.token);
+                  localStorage.setItem("user", JSON.stringify(data))
                   navigate("/");
                 });
               })

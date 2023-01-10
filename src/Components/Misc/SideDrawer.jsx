@@ -12,8 +12,8 @@ import ProfileModal from "./ProfileModal";
 import UserListItem from "./UserListItem";
 
 const SideDrawer = () => {
-  const { user, logout } = useContext(AuthContext);
-  const { selectedChat, setSelectedChat, chats, setChats } =
+  const {  logout } = useContext(AuthContext);
+  const { user, selectedChat, setSelectedChat, chats, setChats } =
     useContext(ChatContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -140,7 +140,7 @@ const SideDrawer = () => {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
-                    <img src={user.photoURL} alt="" />
+                    <img src={user?.image} alt="" />
                   </div>
                 </label>
                 <ul

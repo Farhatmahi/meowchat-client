@@ -16,11 +16,11 @@ const ProfileModal = ({ user }) => {
           </label>
           <div className="avatar mb-8">
             <div className="w-24 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
-              <img src={user.photoURL} alt="user_photo" />
+              <img src={user?.image} alt="user_photo" />
             </div>
           </div>
-          <h1 className="font-bold">{user.displayName}</h1>
-          <h2 className="text-gray-500">{user.email}</h2>
+          <h1 className="font-bold">{user?.username}</h1>
+          <h2 className="text-gray-500">{user?.email}</h2>
           <div className="modal-action"></div>
         </div>
       </div>

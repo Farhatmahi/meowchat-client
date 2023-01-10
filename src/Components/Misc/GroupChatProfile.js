@@ -20,7 +20,7 @@ const GroupChatProfile = ({
   const [renameLoading, setRenameLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  console.log(selectedChat);
+  // console.log(selectedChat);
 
   const handleRemove = (user) => {};
 
