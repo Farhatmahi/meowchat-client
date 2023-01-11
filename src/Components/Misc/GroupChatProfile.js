@@ -34,7 +34,7 @@ const GroupChatProfile = ({
       setRenameLoading(true);
 
       const { data } = await axios.put(
-        "http://localhost:4000/chat/rename",
+        "https://chat-farhatmahi.vercel.app/chat/rename",
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -82,7 +82,7 @@ const GroupChatProfile = ({
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:4000/user?search=${search}`,
+        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -133,7 +133,7 @@ const GroupChatProfile = ({
       setLoading(true);
 
       const { data } = await axios.put(
-        "http://localhost:4000/chat/groupAdd",
+        "https://chat-farhatmahi.vercel.app/chat/groupAdd",
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -141,13 +141,13 @@ const GroupChatProfile = ({
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
         }
       );
 
       console.log(data);
-    // } catch (err) {}
+      // } catch (err) {}
 
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
@@ -231,19 +231,19 @@ const GroupChatProfile = ({
             </button>
           </div>
           <div className="">
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">Add users</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-80"
-              onChange={(e) => {
-                handleSearch(e.target.value);
-              }}
-            />
-          </div>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Add users</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Type here"
+                className="input input-bordered w-80"
+                onChange={(e) => {
+                  handleSearch(e.target.value);
+                }}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col w-80">

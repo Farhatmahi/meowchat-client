@@ -23,7 +23,7 @@ const Login = () => {
       toast.error("Password should be at least 6 characters");
       return false;
     }
-    fetch("http://localhost:4000/user/users")
+    fetch("https://chat-farhatmahi.vercel.app/user/users")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -36,8 +36,8 @@ const Login = () => {
             login(userFind.email, password)
               .then((result) => {
                 console.log(result);
-                console.log(userFind)
-                localStorage.setItem('user', JSON.stringify(userFind) )
+                console.log(userFind);
+                localStorage.setItem("user", JSON.stringify(userFind));
                 toast.success(`Welcome ${userFind.username}`);
                 localStorage.setItem("accessToken", userFind.token);
                 navigate("/");

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChatContext } from "../Context/ChatProvider";
 import SingleChat from "./SingleChat";
@@ -7,10 +7,16 @@ import { MdArrowBack } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import ChatProfile from "./Misc/ChatProfile";
 import GroupChatProfile from "./Misc/GroupChatProfile";
+import { getSender, getSenderImage } from "../Config/ChatLogics";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat, setSelectedChat } = useContext(ChatContext);
+  const [loggedUser, setloggedUser] = useState();
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setloggedUser(user);
+  }, [])
   // console.log(selectedChat);
 
   return (
@@ -31,7 +37,7 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
             <div className="avatar">
               <div className="w-10 rounded-full">
                 {!selectedChat?.isGroupChat ? (
-                  <img src={selectedChat?.users[1]?.image} alt="" />
+                  <img src={getSenderImage(loggedUser, selectedChat?.users)} alt="" />
                 ) : (
                   <img
                     src="https://i.ibb.co/C1NKnQ8/20-group-avatar-icons-2-modified.png"
@@ -43,7 +49,7 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
             <h1 className="text-sm font-normal md:text-lg ml-4">
               {selectedChat?.isGroupChat
                 ? selectedChat?.chatName
-                : selectedChat?.users[1].username}
+                : getSender(loggedUser, selectedChat?.users)}
             </h1>
           </div>
           <div className="w-full flex justify-end">

@@ -31,7 +31,7 @@ const Register = () => {
 
       console.log(user);
 
-      fetch("http://localhost:4000/user", {
+      fetch("https://chat-farhatmahi.vercel.app/user", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -53,7 +53,7 @@ const Register = () => {
                   console.log(result);
                   toast.success(`Welcome ${username}`);
                   localStorage.setItem("accessToken", data.token);
-                  localStorage.setItem("user", JSON.stringify(data))
+                  localStorage.setItem("user", JSON.stringify(data));
                   navigate("/");
                 });
               })

@@ -12,7 +12,7 @@ import ProfileModal from "./ProfileModal";
 import UserListItem from "./UserListItem";
 
 const SideDrawer = () => {
-  const {  logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const { user, selectedChat, setSelectedChat, chats, setChats } =
     useContext(ChatContext);
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const SideDrawer = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:4000/user?search=${search}`,
+        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -74,23 +74,25 @@ const SideDrawer = () => {
 
       const token = localStorage.getItem("accessToken");
 
-      const { data } = await axios.post(`http://localhost:4000/chat`, { userId }, {
-        headers: {
-          "Content-type": "application/json",
-          authorization: `Bearer ${token}`,
+      const { data } = await axios.post(
+        `https://chat-farhatmahi.vercel.app/chat`,
+        { userId },
+        {
+          headers: {
+            "Content-type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       console.log(data);
-      console.log(chats)
+      console.log(chats);
       if (!chats.find((c) => c._id === data._id)) {
         setChats([data, ...chats]);
-        
       }
-      
+
       setSelectedChat(data);
       setLoadingChat(false);
-
     } catch (error) {
       toast.error("Error fetching the chats", {
         style: {
@@ -195,9 +197,11 @@ const SideDrawer = () => {
               />
             ))
           )}
-          {loadingChat && <div className="flex justify-center items-center py-4">
+          {loadingChat && (
+            <div className="flex justify-center items-center py-4">
               <Loader />{" "}
-            </div>}
+            </div>
+          )}
         </ul>
       </div>
     </div>

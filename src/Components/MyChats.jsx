@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../Context/ChatProvider";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 
-import { getSender } from "../Config/ChatLogics";
+import { getSender, getSenderImage } from "../Config/ChatLogics";
 import GroupChatModal from "./Misc/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
@@ -17,11 +17,14 @@ const MyChats = ({ fetchAgain }) => {
 
   useEffect(() => {
     const fetchChats = async () => {
-      const { data } = await axios.get(`http://localhost:4000/chat`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const { data } = await axios.get(
+        `https://chat-farhatmahi.vercel.app/chat`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       setChats(data);
     };
 
@@ -32,7 +35,7 @@ const MyChats = ({ fetchAgain }) => {
 
   // console.log(selectedChat)
 
-  // console.log(chats);
+  console.log(chats);
   // console.log(loggedUser)
 
   // console.log(modalOpen);
@@ -67,7 +70,7 @@ const MyChats = ({ fetchAgain }) => {
             <img
               src={
                 !chat.isGroupChat
-                  ? chat.users[1].image
+                  ? getSenderImage(loggedUser, chat.users)
                   : "https://i.ibb.co/C1NKnQ8/20-group-avatar-icons-2-modified.png"
               }
               className="w-10 rounded-3xl inline mr-4"
@@ -80,7 +83,9 @@ const MyChats = ({ fetchAgain }) => {
             </h1>
           </div>
         ))}
-        {chats.length === 0 && <p className="text-gray-500 text-center">No chats </p>}
+        {chats.length === 0 && (
+          <p className="text-gray-500 text-center">No chats </p>
+        )}
       </div>
       {modalOpen && <GroupChatModal setModalOpen={setModalOpen} />}
     </div>
