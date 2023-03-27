@@ -34,7 +34,7 @@ const GroupChatProfile = ({
       setRenameLoading(true);
 
       const { data } = await axios.put(
-        "https://chat-farhatmahi.vercel.app/chat/rename",
+        "http://localhost:4000/chat/rename",
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -82,7 +82,7 @@ const GroupChatProfile = ({
       setLoading(true);
 
       const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
+        `http://localhost:4000/user?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -133,7 +133,7 @@ const GroupChatProfile = ({
       setLoading(true);
 
       const { data } = await axios.put(
-        "https://chat-farhatmahi.vercel.app/chat/groupAdd",
+        "http://localhost:4000/chat/groupAdd",
         {
           chatId: selectedChat._id,
           userId: user1._id,

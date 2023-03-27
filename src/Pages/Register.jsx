@@ -16,7 +16,7 @@ const Register = () => {
   const [isOff, setisOff] = useState(false);
   const [dataImage, setdataImage] = useState([]);
 
-  console.log(image);
+  // console.log(image);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Register = () => {
 
       console.log(user);
 
-      fetch("https://chat-farhatmahi.vercel.app/user", {
+      fetch("http://localhost:4000/user", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -40,7 +40,6 @@ const Register = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data._id) {
             createUser(email, password)
               .then((result) => {
@@ -50,7 +49,7 @@ const Register = () => {
                 };
 
                 updateUser(userInfo).then((result) => {
-                  console.log(result);
+                  // console.log(result);
                   toast.success(`Welcome ${username}`);
                   localStorage.setItem("accessToken", data.token);
                   localStorage.setItem("user", JSON.stringify(data));
@@ -116,7 +115,7 @@ const Register = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen px-4 lg:px-0">
       <div className="text-center mb-4">
-        <h1 className="text-5xl">Welcome to Chat.io</h1>
+        <h1 className="text-5xl">Welcome to MeowChat</h1>
         <p className="text-2xl">Please register to continue</p>
       </div>
       <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

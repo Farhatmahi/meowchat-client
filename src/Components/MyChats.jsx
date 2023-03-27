@@ -8,23 +8,21 @@ import GroupChatModal from "./Misc/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setloggedUser] = useState();
-  const { selectedChat, setSelectedChat, chats, setChats } =
+  const { selectedChat, setSelectedChat, chats, setChats, user } =
     useContext(ChatContext);
 
   const [modalOpen, setModalOpen] = useState(false);
 
   // console.log(selectedChat);
+  console.log(user.username, user.token);
 
   useEffect(() => {
     const fetchChats = async () => {
-      const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/chat`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
+      const { data } = await axios.get(`http://localhost:4000/chat`, {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      });
       setChats(data);
     };
 
@@ -32,14 +30,6 @@ const MyChats = ({ fetchAgain }) => {
     setloggedUser(user);
     fetchChats();
   }, [setChats, fetchAgain]);
-
-  // console.log(selectedChat)
-
-  console.log(chats);
-  // console.log(loggedUser)
-
-  // console.log(modalOpen);
-  // console.log(chats);
 
   return (
     <div

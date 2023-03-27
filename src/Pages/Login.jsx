@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { CiFlag1 } from "react-icons/ci";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import { ChatContext } from "../Context/ChatProvider";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const { setUser, user } = useContext(ChatContext);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
@@ -23,20 +25,22 @@ const Login = () => {
       toast.error("Password should be at least 6 characters");
       return false;
     }
-    fetch("https://chat-farhatmahi.vercel.app/user/users")
+    fetch("http://localhost:4000/user/users")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         const userFind = data.find((datae) => datae.email === email);
-        console.log(userFind);
+        // console.log(userFind);
 
         if (userFind) {
           if (userFind.password === password) {
             login(userFind.email, password)
               .then((result) => {
-                console.log(result);
-                console.log(userFind);
+                // console.log(result);
+                // console.log(userFind);
+                setUser(userFind);
+                console.log(user);
                 localStorage.setItem("user", JSON.stringify(userFind));
                 toast.success(`Welcome ${userFind.username}`);
                 localStorage.setItem("accessToken", userFind.token);
@@ -53,6 +57,34 @@ const Login = () => {
         }
       });
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const email = form.email.value;
+  //   const password = form.password.value;
+  //   const user = {
+  //     email,
+  //     password,
+  //   };
+  //   if (email === "") {
+  //     toast.error("Email is required");
+  //     return false;
+  //   } else if (password.length < 6) {
+  //     toast.error("Password should be at least 6 characters");
+  //     return false;
+  //   }
+
+  //   fetch("http://localhost:4000/user/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(user),
+  //   })
+  //     .then((res) => res.json())
+  //     .then(data => console.log(data));
+  // };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen px-4 lg:px-0">

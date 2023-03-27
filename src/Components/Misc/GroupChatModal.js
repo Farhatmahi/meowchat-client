@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import UserListItem from "./UserListItem";
 import UserNameBadge from "./UserNameBadge";
 
-const GroupChatModal = ({setModalOpen}) => {
+const GroupChatModal = ({ setModalOpen }) => {
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -29,7 +29,7 @@ const GroupChatModal = ({setModalOpen}) => {
 
     try {
       const { data } = await axios.post(
-        `https://chat-farhatmahi.vercel.app/chat/group`,
+        `http://localhost:4000/chat/group`,
 
         {
           name: groupChatName,
@@ -51,15 +51,15 @@ const GroupChatModal = ({setModalOpen}) => {
           color: "#FFFFFF",
         },
       });
-      setModalOpen(false)
+      setModalOpen(false);
     } catch (error) {
-        // toast.error("Please atleast choose 2 users", {
-        //     style: {
-        //       padding: "16px",
-        //       backgroundColor: "#5853d5",
-        //       color: "#FFFFFF",
-        //     },
-        //   }); 
+      // toast.error("Please atleast choose 2 users", {
+      //     style: {
+      //       padding: "16px",
+      //       backgroundColor: "#5853d5",
+      //       color: "#FFFFFF",
+      //     },
+      //   });
     }
   };
 
@@ -73,7 +73,7 @@ const GroupChatModal = ({setModalOpen}) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
+        `http://localhost:4000/user?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -186,7 +186,8 @@ const GroupChatModal = ({setModalOpen}) => {
             )}
 
             <input
-              type="submit" value="Create"
+              type="submit"
+              value="Create"
               className="btn bg-accent hover:bg-[#E9F83F] rounded-2xl text-black"
             />
           </form>

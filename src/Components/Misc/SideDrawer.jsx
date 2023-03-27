@@ -13,13 +13,14 @@ import UserListItem from "./UserListItem";
 
 const SideDrawer = () => {
   const { logout } = useContext(AuthContext);
-  const { user, selectedChat, setSelectedChat, chats, setChats } =
-    useContext(ChatContext);
+  const { user, setSelectedChat, chats, setChats } = useContext(ChatContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+
+  // console.log(user, "from navbar");
 
   const handleLogout = () => {
     logout()
@@ -47,7 +48,7 @@ const SideDrawer = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
+        `http://localhost:4000/user?search=${search}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -75,7 +76,7 @@ const SideDrawer = () => {
       const token = localStorage.getItem("accessToken");
 
       const { data } = await axios.post(
-        `https://chat-farhatmahi.vercel.app/chat`,
+        `http://localhost:4000/chat`,
         { userId },
         {
           headers: {
@@ -85,8 +86,8 @@ const SideDrawer = () => {
         }
       );
 
-      console.log(data);
-      console.log(chats);
+      // console.log(data);
+      // console.log(chats);
       if (!chats.find((c) => c._id === data._id)) {
         setChats([data, ...chats]);
       }
@@ -120,25 +121,9 @@ const SideDrawer = () => {
               <span className="hidden md:block">Search</span>
             </label>
           </div>
-          <div className="flex-1 px-2 mx-2">ChatBud</div>
+          <div className="flex-1 px-2 mx-2">Meowchat</div>
           <div className="flex-none ">
             <div className="flex items-center">
-              <div className="dropdown dropdown-end">
-                <label tabIndex={0} className="btn m-1">
-                  <AiOutlineBell className="text-2xl" />
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <Link>Item 1</Link>
-                  </li>
-                  <li>
-                    <Link>Item 2</Link>
-                  </li>
-                </ul>
-              </div>
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">

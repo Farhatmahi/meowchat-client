@@ -1,6 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 
 export const ChatContext = createContext();
 
@@ -17,6 +15,8 @@ const ChatProvider = ({ children }) => {
     setUser(userInfo)
   }, []);
 
+
+  console.log(user, "from chat provider")
 
   return (
     <ChatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats }}>

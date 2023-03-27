@@ -6,9 +6,7 @@ import MyChats from './MyChats';
 const ChatContainer = () => {
     const {user} = useContext(AuthContext)
     const [fetchAgain, setFetchAgain] = useState(false)
-
-    
-    
+        
     return (
         
         <div className="flex w-full h-[100vh]">
