@@ -13,9 +13,9 @@ const routes = createBrowserRouter([
       {
         path: "/",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <Chat />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
       {

@@ -9,40 +9,10 @@ import { toast } from "react-hot-toast";
 import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = () => {
-  const { user, selectedChat, setSelectedChat } = useContext(ChatContext);
+  const { selectedChat } = useContext(ChatContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newMessage, setNewMessage] = useState();
-
-  const fetchMessages = async (e) => {
-    if (!selectedChat) return;
-    try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `http://localhost:4000/message/${selectedChat._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-      console.log(messages);
-      setMessages(data);
-      setLoading(false);
-    } catch (error) {
-      toast.error("An error occured", {
-        style: {
-          padding: "16px",
-          backgroundColor: "#5853d5",
-          color: "#FFFFFF",
-        },
-      });
-    }
-  };
-
-  useEffect(() => {
-    fetchMessages();
-  }, [selectedChat]);
+  const [newMessage, setNewMessage] = useState("");
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -50,7 +20,7 @@ const SingleChat = () => {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:4000/message",
+          "https://chat-farhatmahi.vercel.app/message",
           {
             content: newMessage,
             chatId: selectedChat._id,
@@ -62,12 +32,11 @@ const SingleChat = () => {
             },
           }
         );
-
         console.log(data);
         setMessages([...messages, data]);
-        setNewMessage("");
+        console.log(messages);
       } catch (error) {
-        toast.error("An error occured", {
+        toast.error("An error occurred", {
           style: {
             padding: "16px",
             backgroundColor: "#5853d5",
@@ -78,15 +47,48 @@ const SingleChat = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchMessages = async () => {
+  //     if (!selectedChat) {
+  //       return;
+  //     }
+  //     try {
+  //       setLoading(true);
+  //       const { data } = await axios.get(
+  //         `https://chat-farhatmahi.vercel.app/message/${selectedChat._id}`,
+  //         {
+  //           headers: {
+  //             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //           },
+  //         }
+  //       );
+
+  //       setMessages(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       toast.error("An error occured", {
+  //         style: {
+  //           padding: "16px",
+  //           backgroundColor: "#5853d5",
+  //           color: "#FFFFFF",
+  //         },
+  //       });
+  //     }
+  //   };
+  //   fetchMessages();
+  // }, [selectedChat]);
+
+  // console.log(messages);
+
   useEffect(() => {
     const fetchMessages = async () => {
       if (!selectedChat) {
         return;
       }
       try {
-        setLoading(true);
+        // setLoading(true);
         const { data } = await axios.get(
-          `http://localhost:4000/message/${selectedChat._id}`,
+          `https://chat-farhatmahi.vercel.app/message/${selectedChat._id}`,
           {
             headers: {
               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -95,7 +97,12 @@ const SingleChat = () => {
         );
 
         setMessages(data);
-        setLoading(false);
+        // setLoading(false);
+
+        // Check if a new message was sent and update the messages state
+        if (data.length > messages.length) {
+          setMessages(data);
+        }
       } catch (error) {
         toast.error("An error occured", {
           style: {
@@ -107,9 +114,7 @@ const SingleChat = () => {
       }
     };
     fetchMessages();
-  }, [selectedChat]);
-
-  // console.log(messages);
+  }, [selectedChat, messages.length]);
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -128,7 +133,7 @@ const SingleChat = () => {
               <Loader />
             </div>
           ) : (
-            <div className=" overflow-y-auto h-full">
+            <div className=" overflow-y-auto h-full mt-5 px-4">
               <ScrollableChat messages={messages} />
             </div>
           )}
@@ -144,12 +149,13 @@ const SingleChat = () => {
               onChange={typingHandler}
               value={newMessage}
             />
-            {/* <button
+
+            <button
               className="flex-shrink-0 mx-3 text-sm text-white rounded-xl"
               type="button"
             >
               <BsEmojiSmile className="text-xl" />
-            </button> */}
+            </button>
             <button
               className="flex-shrink-0 bg-accent text-sm text-black p-2 rounded-xl"
               type="submit"

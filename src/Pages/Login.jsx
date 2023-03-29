@@ -25,7 +25,7 @@ const Login = () => {
       toast.error("Password should be at least 6 characters");
       return false;
     }
-    fetch("http://localhost:4000/user/users")
+    fetch("https://chat-farhatmahi.vercel.app/user/users")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
@@ -75,7 +75,7 @@ const Login = () => {
   //     return false;
   //   }
 
-  //   fetch("http://localhost:4000/user/login", {
+  //   fetch("https://chat-farhatmahi.vercel.app/user/login", {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",
@@ -110,7 +110,7 @@ const Login = () => {
               <span className="label-text">Password</span>
             </label>
             <input
-              type="text"
+              type="password"
               name="password"
               placeholder=""
               className="input input-bordered"

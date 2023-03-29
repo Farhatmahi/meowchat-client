@@ -31,7 +31,7 @@ const Register = () => {
 
       console.log(user);
 
-      fetch("http://localhost:4000/user", {
+      fetch("https://chat-farhatmahi.vercel.app/user", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -148,7 +148,7 @@ const Register = () => {
               <span className="label-text">Password</span>
             </label>
             <input
-              type="text"
+              type="password"
               placeholder=""
               name="password"
               className="input input-bordered"
