@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import { CiFlag1 } from "react-icons/ci";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import { ChatContext } from "../Context/ChatProvider";
 
@@ -25,7 +25,7 @@ const Login = () => {
       toast.error("Password should be at least 6 characters");
       return false;
     }
-    fetch("https://chat-farhatmahi.vercel.app/user/users")
+    fetch("http://localhost:4000/user/users")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
@@ -75,7 +75,7 @@ const Login = () => {
   //     return false;
   //   }
 
-  //   fetch("https://chat-farhatmahi.vercel.app/user/login", {
+  //   fetch("http://localhost:4000/user/login", {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",

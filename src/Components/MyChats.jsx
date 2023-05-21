@@ -18,14 +18,11 @@ const MyChats = ({ fetchAgain }) => {
 
   useEffect(() => {
     const fetchChats = async () => {
-      const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/chat`,
-        {
-          headers: {
-            authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const { data } = await axios.get(`http://localhost:4000/chat`, {
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      });
       setChats(data);
     };
 

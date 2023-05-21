@@ -31,7 +31,7 @@ const Register = () => {
 
       console.log(user);
 
-      fetch("https://chat-farhatmahi.vercel.app/user", {
+      fetch("http://localhost:4000/user", {
         method: "POST",
         headers: {
           "content-type": "application/json",

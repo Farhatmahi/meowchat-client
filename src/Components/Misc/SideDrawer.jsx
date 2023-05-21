@@ -48,7 +48,7 @@ const SideDrawer = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
+        `http://localhost:4000/user?search=${search}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ const SideDrawer = () => {
       const token = localStorage.getItem("accessToken");
 
       const { data } = await axios.post(
-        `https://chat-farhatmahi.vercel.app/chat`,
+        `http://localhost:4000/chat`,
         { userId },
         {
           headers: {

@@ -20,7 +20,7 @@ const SingleChat = () => {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "https://chat-farhatmahi.vercel.app/message",
+          "http://localhost:4000/message",
           {
             content: newMessage,
             chatId: selectedChat._id,
@@ -47,38 +47,6 @@ const SingleChat = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchMessages = async () => {
-  //     if (!selectedChat) {
-  //       return;
-  //     }
-  //     try {
-  //       setLoading(true);
-  //       const { data } = await axios.get(
-  //         `https://chat-farhatmahi.vercel.app/message/${selectedChat._id}`,
-  //         {
-  //           headers: {
-  //             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //           },
-  //         }
-  //       );
-
-  //       setMessages(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       toast.error("An error occured", {
-  //         style: {
-  //           padding: "16px",
-  //           backgroundColor: "#5853d5",
-  //           color: "#FFFFFF",
-  //         },
-  //       });
-  //     }
-  //   };
-  //   fetchMessages();
-  // }, [selectedChat]);
-
-  // console.log(messages);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -88,7 +56,7 @@ const SingleChat = () => {
       try {
         // setLoading(true);
         const { data } = await axios.get(
-          `https://chat-farhatmahi.vercel.app/message/${selectedChat._id}`,
+          `http://localhost:4000/message/${selectedChat._id}`,
           {
             headers: {
               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -150,12 +118,12 @@ const SingleChat = () => {
               value={newMessage}
             />
 
-            <button
+            {/* <button
               className="flex-shrink-0 mx-3 text-sm text-white rounded-xl"
               type="button"
             >
               <BsEmojiSmile className="text-xl" />
-            </button>
+            </button> */}
             <button
               className="flex-shrink-0 bg-accent text-sm text-black p-2 rounded-xl"
               type="submit"

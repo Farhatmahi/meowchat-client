@@ -29,7 +29,7 @@ const GroupChatModal = ({ setModalOpen }) => {
 
     try {
       const { data } = await axios.post(
-        `https://chat-farhatmahi.vercel.app/chat/group`,
+        `http://localhost:4000/chat/group`,
 
         {
           name: groupChatName,
@@ -73,7 +73,7 @@ const GroupChatModal = ({ setModalOpen }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `https://chat-farhatmahi.vercel.app/user?search=${search}`,
+        `http://localhost:4000/user?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

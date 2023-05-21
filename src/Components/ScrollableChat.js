@@ -13,7 +13,7 @@ const ScrollableChat = ({ messages }) => {
     <ScrollableFeed>
       {messages &&
         messages.map((m, i) => (
-          <div key={m._id} className="w-full flex">
+          <div key={i} className="w-full flex">
             {(isSameSender(messages, m, i, user?._id) ||
               isLastMessage(messages, i, user?._id)) && (
               <div className="inline-block">
