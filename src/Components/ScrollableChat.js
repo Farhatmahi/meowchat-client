@@ -31,7 +31,7 @@ const ScrollableChat = ({ messages }) => {
               style={{
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
               }}
-              className={`chat  ${
+              className={`chat flex-grow ${
                 m?.sender?._id === user?._id
                   ? "chat-end"
                   : "chat-start inline-block w-[70%]"

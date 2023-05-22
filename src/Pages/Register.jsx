@@ -2,9 +2,11 @@ import React, { Children, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import { Oval } from "react-loader-spinner";
 
 const Register = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, loading, setLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
@@ -19,6 +21,7 @@ const Register = () => {
   // console.log(image);
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     if (handleValidation()) {
       const { username, email, password } = values;
@@ -49,19 +52,21 @@ const Register = () => {
                 };
 
                 updateUser(userInfo).then((result) => {
-                  // console.log(result);
                   toast.success(`Welcome ${username}`);
                   localStorage.setItem("accessToken", data.token);
                   localStorage.setItem("user", JSON.stringify(data));
                   navigate("/");
+                  setLoading(false);
                 });
               })
               .catch((err) => {
                 console.error(err);
+                setLoading(false);
                 toast.error("Email is already in use");
               });
           } else {
             toast.error(data.message);
+            setLoading(false);
           }
         });
     }
@@ -94,15 +99,19 @@ const Register = () => {
     const { username, email, password } = values;
     if (username.length < 3) {
       toast.error("Username should be atleast 3 characters");
+      setLoading(false)
       return false;
     } else if (email === "") {
       toast.error("Email is required");
+      setLoading(false)
       return false;
     } else if (password.length < 6) {
       toast.error("Password should be at least 6 characters");
+      setLoading(false)
       return false;
     } else if (image === "") {
       toast.error("Please choose an avatar");
+      setLoading(false)
       return false;
     }
     return true;
@@ -178,7 +187,27 @@ const Register = () => {
             </div>
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">Register</button>
+            <button className="btn btn-primary">
+              {loading ? (
+                <div className="text-white flex justify-center items-center gap-3">
+                  <Oval
+                    height={20}
+                    width={20}
+                    color="#ffffff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#fdfdfd"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />{" "}
+                  Signing in
+                </div>
+              ) : (
+                "Register"
+              )}
+            </button>
           </div>
           <label className="label text-center">
             <p>
