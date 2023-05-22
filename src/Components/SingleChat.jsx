@@ -57,47 +57,45 @@ const SingleChat = () => {
     }
   };
 
-  const fetchMessages = async () => {
-    if (!selectedChat) {
-      return;
-    }
-    try {
-      // setLoading(true);
-      const { data } = await axios.get(
-        `http://localhost:4000/message/${selectedChat._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-
-      setMessages(data);
-      socket.emit("join chat", selectedChat._id);
-      // setLoading(false);
-
-      // Check if a new message was sent and update the messages state
-      if (data.length > messages.length) {
-        setMessages(data);
-      }
-    } catch (error) {
-      toast.error("An error occured", {
-        style: {
-          padding: "16px",
-          backgroundColor: "#5853d5",
-          color: "#FFFFFF",
-        },
-      });
-    }
-  };
-
   //this fetch is making the real time chat working
-  fetchMessages();
+  // fetchMessages();
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      if (!selectedChat) {
+        return;
+      }
+      try {
+        // setLoading(true);
+        const { data } = await axios.get(
+          `http://localhost:4000/message/${selectedChat._id}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+
+        setMessages(data);
+        socket.emit("join chat", selectedChat._id);
+        // setLoading(false);
+
+        if (data.length > messages.length) {
+          setMessages(data);
+        }
+      } catch (error) {
+        toast.error("An error occured", {
+          style: {
+            padding: "16px",
+            backgroundColor: "#5853d5",
+            color: "#FFFFFF",
+          },
+        });
+      }
+    };
     fetchMessages();
     selectedChatCompare = selectedChat;
-  }, [selectedChat]);
+  }, [selectedChat, messages]);
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);

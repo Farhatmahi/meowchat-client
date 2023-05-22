@@ -24,7 +24,6 @@ const Login = () => {
       toast.error("Email is required");
       setLoading(false);
       return false;
-      
     } else if (password.length < 6) {
       toast.error("Password should be at least 6 characters");
       setLoading(false);
@@ -93,7 +92,7 @@ const Login = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" disabled={loading}>
               {loading ? (
                 <div className="text-white flex justify-center items-center gap-3">
                   <Oval

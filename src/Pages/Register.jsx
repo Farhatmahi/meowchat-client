@@ -187,7 +187,7 @@ const Register = () => {
             </div>
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" disabled={loading}>
               {loading ? (
                 <div className="text-white flex justify-center items-center gap-3">
                   <Oval
@@ -211,10 +211,10 @@ const Register = () => {
           </div>
           <label className="label text-center">
             <p>
-              New here?{" "}
+              Already have an account?{" "}
               <Link to="/login">
                 <span className="text-primary hover:text-accent hover:underline">
-                  Register now!
+                  Login!
                 </span>
               </Link>
             </p>
