@@ -39,7 +39,7 @@ const Login = () => {
             login(userFind.email, password)
               .then((result) => {
                 setUser(userFind);
-                console.log(user);
+                // console.log(user);
                 localStorage.setItem("user", JSON.stringify(userFind));
                 toast.success(`Welcome ${userFind.username}`);
                 localStorage.setItem("accessToken", userFind.token);

@@ -32,7 +32,7 @@ const Register = () => {
         image: image,
       };
 
-      console.log(user);
+      // console.log(user);
 
       fetch("http://localhost:4000/user", {
         method: "POST",

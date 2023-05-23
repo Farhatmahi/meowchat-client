@@ -17,10 +17,10 @@ const ScrollableChat = ({ messages }) => {
             {(isSameSender(messages, m, i, user?._id) ||
               isLastMessage(messages, i, user?._id)) && (
               <div className="inline-block">
-                <div className="tooltip" data-tip={m.sender.username}>
+                <div className="tooltip" data-tip={m.sender?.username}>
                   <div className="avatar">
                     <div className="w-12 rounded-full">
-                      <img src={m.sender.image} alt="" />
+                      <img src={m.sender?.image} alt="" />
                     </div>
                   </div>
                 </div>
@@ -29,7 +29,7 @@ const ScrollableChat = ({ messages }) => {
 
             <span
               style={{
-                marginLeft: isSameSenderMargin(messages, m, i, user._id),
+                marginLeft: isSameSenderMargin(messages, m, i, user?._id),
               }}
               className={`chat flex-grow ${
                 m?.sender?._id === user?._id

@@ -13,14 +13,66 @@ const ENDPOINT = "http://localhost:4000";
 let socket, selectedChatCompare;
 
 const SingleChat = () => {
-  const { selectedChat } = useContext(ChatContext);
+  const { user, selectedChat } = useContext(ChatContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-
+  
   useEffect(() => {
     socket = io(ENDPOINT);
+    socket.emit('setup', user)
+    console.log("Socket connected:", socket);
+  }, [user]);
+
+  // ...
+
+  useEffect(() => {
+    // Listen for "message received" event from the server
+    socket.on("message received", (message) => {
+      console.log("Message received:", message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      // Clean up the socket event listener when the component unmounts
+      socket.off("message received");
+    };
   }, []);
+
+  // ...
+
+  const fetchMessages = async () => {
+    if (!selectedChat) {
+      return;
+    }
+    try {
+      // setLoading(true);
+      const { data } = await axios.get(
+        `http://localhost:4000/message/${selectedChat._id}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      setMessages(data);
+      socket.emit("join chat", selectedChat._id);
+      // setLoading(false);
+
+      if (data.length > messages.length) {
+        setMessages(data);
+      }
+    } catch (error) {
+      toast.error("An error occured", {
+        style: {
+          padding: "16px",
+          backgroundColor: "#5853d5",
+          color: "#FFFFFF",
+        },
+      });
+    }
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -40,11 +92,11 @@ const SingleChat = () => {
             },
           }
         );
-        console.log(data);
+        // console.log(data);
 
-        socket.emit("new message", data);
+        socket.emit("new message", data); // Emit "new message" event to the server
         setMessages([...messages, data]);
-        console.log(messages);
+        fetchMessages();
       } catch (error) {
         toast.error("An error occurred", {
           style: {
@@ -57,45 +109,10 @@ const SingleChat = () => {
     }
   };
 
-  //this fetch is making the real time chat working
-  // fetchMessages();
-
   useEffect(() => {
-    const fetchMessages = async () => {
-      if (!selectedChat) {
-        return;
-      }
-      try {
-        // setLoading(true);
-        const { data } = await axios.get(
-          `http://localhost:4000/message/${selectedChat._id}`,
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-
-        setMessages(data);
-        socket.emit("join chat", selectedChat._id);
-        // setLoading(false);
-
-        if (data.length > messages.length) {
-          setMessages(data);
-        }
-      } catch (error) {
-        toast.error("An error occured", {
-          style: {
-            padding: "16px",
-            backgroundColor: "#5853d5",
-            color: "#FFFFFF",
-          },
-        });
-      }
-    };
     fetchMessages();
     selectedChatCompare = selectedChat;
-  }, [selectedChat, messages]);
+  }, [selectedChat, messages.length]);
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);

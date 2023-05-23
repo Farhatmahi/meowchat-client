@@ -14,7 +14,7 @@ const ChatProvider = ({ children }) => {
     setUser(userInfo);
   }, []);
 
-  console.log(user, "from chat provider");
+  // console.log(user, "from chat provider");
 
   return (
     <ChatContext.Provider

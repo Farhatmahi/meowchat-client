@@ -57,7 +57,7 @@ const SideDrawer = () => {
       );
       setLoading(false);
       setSearchResult(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       toast.error("An error occured", {
         style: {

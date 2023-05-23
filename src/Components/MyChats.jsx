@@ -2,19 +2,18 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../Context/ChatProvider";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-
 import { getSender, getSenderImage } from "../Config/ChatLogics";
 import GroupChatModal from "./Misc/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setloggedUser] = useState();
-  const { selectedChat, setSelectedChat, chats, setChats, user } =
+  const { selectedChat, setSelectedChat, chats, setChats } =
     useContext(ChatContext);
 
   const [modalOpen, setModalOpen] = useState(false);
 
   // console.log(selectedChat);
-  console.log(user.username, user.token);
+  // console.log(user.username, user.token);
 
   useEffect(() => {
     const fetchChats = async () => {
