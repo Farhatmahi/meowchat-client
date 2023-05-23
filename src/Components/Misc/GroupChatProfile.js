@@ -22,7 +22,34 @@ const GroupChatProfile = ({
 
   // console.log(selectedChat);
 
-  const handleRemove = (user) => {};
+  const handleRemove = async (selectedUser) => {
+    // if (selectedUser._id === user._id) {
+    //   toast.error("You cannot remove yourself from the group", {
+    //     style: {
+    //       padding: "16px",
+    //       backgroundColor: "#5853d5",
+    //       color: "#FFFFFF",
+    //     },
+    //   });
+    //   return;
+    // }
+    try {
+      const { data } = await axios.put(
+        "http://localhost:4000/chat/groupRemove",
+        {
+          chatId: selectedChat._id,
+          userId: selectedUser._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+    } catch (error) {}
+  };
 
   const handleRename = async (e) => {
     e.preventDefault();
@@ -202,6 +229,7 @@ const GroupChatProfile = ({
                 user={user}
                 key={user._id}
                 handleFunction={() => {
+                  console.log("clicked");
                   handleRemove(user);
                 }}
               />
@@ -265,7 +293,7 @@ const GroupChatProfile = ({
           </div>
 
           <button
-            onClick={handleLeave}
+            onClick={() => handleLeave(user)}
             type="submit"
             className="btn btn-error mt-4 w-80"
           >

@@ -131,7 +131,7 @@ const SingleChat = () => {
           ) : (
             <div className=" overflow-y-auto h-full mt-5 px-4">
               <ScrollableChat messages={messages} />
-            </div>
+             </div> 
           )}
           <form
             // onKeyDown={sendMessage}

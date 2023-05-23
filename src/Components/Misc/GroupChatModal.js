@@ -163,6 +163,7 @@ const GroupChatModal = ({ setModalOpen }) => {
                 user={user}
                 key={user._id}
                 handleFunction={() => {
+                  console.log('delete user')
                   handleDelete(user);
                 }}
               />
